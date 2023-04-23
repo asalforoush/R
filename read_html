@@ -1,0 +1,21 @@
+library(rvest)
+
+# HTML code for the ordered list
+list_raw_html <- '<ol>
+<li>Learn HTML</li>
+<li>Learn CSS</li>
+<li>Learn R</li>
+<li>Scrape everything!*</li>
+<li>Do it responsibly!</li>
+</ol>'
+
+# Read the HTML code into an R object
+list_html <- read_html(list_raw_html)
+
+# Select all list items using CSS selector syntax
+list_items <- list_html %>% 
+  html_nodes("li") %>% 
+  html_text()
+
+# View the selected list items
+list_items
