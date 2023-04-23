@@ -1,0 +1,27 @@
+library(rvest)
+library(tibble)
+
+# HTML code of the bulleted list
+hyperlink_raw_html <- '<ul>
+<li><a href="https://en.wikipedia.org/">Wikipedia</a></li>
+<li><a href="https://www.dictionary.com/">Dictionary</a></li>
+<li><a href="https://www.google.com/">Search Engine</a></li>
+</ul>
+Compiled with help from Google.'
+
+# Extract all the a nodes from the bulleted list
+links <- hyperlink_raw_html %>% 
+  read_html() %>%
+  html_elements('li a') # 'ul a' is also correct!
+
+# Extract the needed values for the data frame
+domain_value <- links %>% html_attr('href')
+name_value <- links %>% html_text()
+
+# Construct a data frame
+link_df <- tibble(
+  domain = domain_value,
+  name = name_value
+)
+
+link_df
