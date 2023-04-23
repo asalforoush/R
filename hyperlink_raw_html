@@ -1,0 +1,26 @@
+library(rvest)
+library(tibble)
+
+# HTML code for the bulleted list of links
+hyperlink_raw_html <- '<ul>
+<li><a href="https://en.wikipedia.org/">Wikipedia</a></li>
+<li><a href="https://www.dictionary.com/">Dictionary</a></li>
+<li><a href="https://www.google.com/">Search Engine</a></li>
+</ul>
+<p>Compiled with help from Google.</p>'
+
+# Turn the raw HTML code into an HTML document rvest can work with
+hyperlink_html <- read_html(hyperlink_raw_html)
+
+# Extract all the a nodes that are within the bulleted list
+a_nodes <- hyperlink_html %>% 
+  html_elements("ul li a")
+
+# Convert the a nodes to a data frame using tibble()
+hyperlink_df <- tibble(
+  url = a_nodes %>% html_attr("href"),
+  text = a_nodes %>% html_text()
+)
+
+# View the resulting data frame
+hyperlink_df
