@@ -1,12 +1,12 @@
 library(rvest)
-library(tibble)
 
 # Read the HTML page
 mountains_html <- read_html("https://en.wikipedia.org/wiki/List_of_highest_mountains")
 
 # Extract the "clean" table into a data frame 
-mountains <- mountains_html %>% 
-  html_element("table#clean") %>% 
-  html_table(fill = TRUE)
+mountains <- mountains_html %>%
+  html_node("table#clean") %>%
+  html_table()
 
+# Print the resulting data frame
 mountains
